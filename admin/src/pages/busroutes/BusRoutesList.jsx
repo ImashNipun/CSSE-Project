@@ -1,8 +1,23 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { AiOutlineEye, AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
 const BusRoutesList = () => {
+  const [busRoutes, setBusRoutes] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8000/api/v1/busroute/")
+      .then((res) => {
+        setBusRoutes(res?.data?.data);
+        console.log(res.data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   return (
     <>
       <div className="mx-auto mt-4 ml-10 mr-6">
@@ -74,27 +89,43 @@ const BusRoutesList = () => {
                     </tr>
                   </thead>
                   <tbody class="bg-white divide-y divide-gray-200">
-                    <tr>
-                      <td class="px-6 py-4 whitespace-nowrap">Data 1</td>
-                      <td class="px-6 py-4 whitespace-nowrap">Data 2</td>
-                      <td class="px-6 py-4 whitespace-nowrap">Data 3</td>
-                      <td class="px-6 py-4 whitespace-nowrap">Data 1</td>
-                      <td class="px-6 py-4 whitespace-nowrap">Data 2</td>
-                      <td class="px-6 py-4 whitespace-nowrap">Data 3</td>
-                      <td class="px-6 py-4 whitespace-nowrap">Data 2</td>
-                      <td class="px-6 py-4 whitespace-nowrap">Data 3</td>
-                      <td class="px-6 py-4 whitespace-nowrap flex text-xl">
-                        <Link to="/#" className="me-4">
-                          <AiOutlineEye />
-                        </Link>
-                        <Link to="/update-bus-route" className="me-4">
-                          <AiOutlineEdit />
-                        </Link>
-                        <Link to="/#">
-                          <AiOutlineDelete />
-                        </Link>
-                      </td>
-                    </tr>
+                    {busRoutes.map((busRoutes, index) => {
+                      return (
+                        <tr key={index}>
+                          <td class="px-6 py-4 whitespace-nowrap">#</td>
+                          <td class="px-6 py-4 whitespace-nowrap">Normal</td>
+                          <td class="px-6 py-4 whitespace-nowrap">
+                            {busRoutes.routeName}
+                          </td>
+                          <td class="px-6 py-4 whitespace-nowrap">
+                            {busRoutes.routeNumber}
+                          </td>
+                          <td class="px-6 py-4 whitespace-nowrap">
+                            {busRoutes.beginning}
+                          </td>
+                          <td class="px-6 py-4 whitespace-nowrap">
+                            {busRoutes.destination}
+                          </td>
+                          <td class="px-6 py-4 whitespace-nowrap">
+                            {busRoutes.distance}
+                          </td>
+                          <td class="px-6 py-4 whitespace-nowrap">
+                            {busRoutes.travelTime}
+                          </td>
+                          <td class="px-6 py-4 whitespace-nowrap flex text-xl">
+                            <Link to="/#" className="me-4">
+                              <AiOutlineEye />
+                            </Link>
+                            <Link to="/update-bus-route" className="me-4">
+                              <AiOutlineEdit />
+                            </Link>
+                            <Link to="/#">
+                              <AiOutlineDelete />
+                            </Link>
+                          </td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               </div>

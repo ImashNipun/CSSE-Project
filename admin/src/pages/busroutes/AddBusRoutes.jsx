@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import FormInput from "../../components/FormInput";
-import Button from "../../components/Button";
-import { useFormik } from "formik";
-import { validationSchema } from "../../schemas/ValidationSchema";
 import axios from "axios";
+import { useFormik } from "formik";
+import Button from "../../components/Button";
+import FormInput from "../../components/FormInput";
+import { validationSchema } from "../../schemas/ValidationSchema";
 
 const AddBusRoutes = () => {
+  
   const [busType, setBusType] = useState([]);
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
@@ -26,7 +27,6 @@ const AddBusRoutes = () => {
 
       onSubmit: (values, { resetForm }) => {
         values.intermediateStops = [];
-        // values.busType = ""
 
         axios
           .post("http://localhost:8000/api/v1/busroute/", values)
@@ -53,18 +53,6 @@ const AddBusRoutes = () => {
         console.log(error);
       });
   }, []);
-
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:8000/api/v1/farecycle")
-  //     .then((res) => {
-  //       setBusType(res.data.data);
-  //       console.log(res.data.data);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }, []);
 
   return (
     <div className="mx-auto mt-4 ml-10 mr-6">

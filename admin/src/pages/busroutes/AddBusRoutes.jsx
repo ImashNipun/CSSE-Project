@@ -45,7 +45,7 @@ const AddBusRoutes = () => {
             <div className="w-1/2 me-4">
               <FormInput
                 label="Begining"
-                htmlFor="brgining"
+                htmlFor="begining"
                 type="text"
                 id="begining"
               ></FormInput>

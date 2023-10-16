@@ -1,159 +1,159 @@
 import express from "express";
-import BusRoute from "./models/bus_route.model";
+import BusType from "./models/bus_type.model";
 import { response } from "../../../utils";
 import asyncHandler from "express-async-handler";
 
 const router = express.Router();
 
-// Create a new bus route
+// Create a new bus type
 router.post(
   "/",
   asyncHandler(async (req, res) => {
     try {
-      const busRouteData = req.body;
-      const newBusRoute = await BusRoute.create(busRouteData);
+      const busType = req.body;
+
+      const newBusType = await BusType.create(busType);
 
       return response({
         res,
         status: 201,
-        message: "New bus route created successfully!",
-        data: newBusRoute,
+        message: "New bus type created successfully!",
+        data: newBusType,
       });
     } catch (error) {
+      // Handle errors and return appropriate responses
       return response({
         res,
         status: 500,
-        message: "An error occurred while creating a bus route",
+        message: "An error occurred while creating a bus type",
         error: error.message,
       });
     }
   })
 );
 
-// Read all bus routes
+// Get all bus types
 router.get(
   "/",
   asyncHandler(async (req, res) => {
     try {
-      const allBusRoutes = await BusRoute.find()
-        .populate("busType")
-        .populate("intermediateStops.fare")
-        .lean();
+      const allBusTypes = await BusType.find().lean();
 
       return response({
         res,
         status: 200,
-        data: allBusRoutes,
+        data: allBusTypes,
       });
     } catch (error) {
+      // Handle errors and return appropriate responses
       return response({
         res,
         status: 500,
-        message: "An error occurred while fetching bus routes",
+        message: "An error occurred while fetching bus types",
         error: error.message,
       });
     }
   })
 );
 
-// Read one bus route
+// Get one bus type
 router.get(
   "/:id",
   asyncHandler(async (req, res) => {
     const { id } = req.params;
 
     try {
-      const singleBusRoute = await BusRoute.findById(id)
-        .populate("busType")
-        .populate("intermediateStops.fare")
-        .lean();
+      const singleBusType = await BusType.findById(id).lean();
 
-      if (singleBusRoute) {
+      if (singleBusType) {
         return response({
           res,
           status: 200,
-          data: singleBusRoute,
+          data: singleBusType,
         });
       } else {
         return response({
           res,
           status: 404,
-          message: "Bus route not found",
+          message: "Bus type not found",
         });
       }
     } catch (error) {
+      // Handle errors and return appropriate responses
       return response({
         res,
         status: 500,
-        message: "An error occurred while fetching the bus route",
+        message: "An error occurred while fetching the bus type",
         error: error.message,
       });
     }
   })
 );
 
-// Update a bus route
+// Update a bus type
 router.put(
   "/:id",
   asyncHandler(async (req, res) => {
     const { id } = req.params;
-    const updatedBusRouteData = req.body;
+    const busType = req.body;
 
     try {
-      const updatedBusRoute = await BusRoute.findByIdAndUpdate(id, updatedBusRouteData).lean();
+      const updateBusType = await BusType.findByIdAndUpdate(id, busType).lean();
 
-      if (updatedBusRoute) {
+      if (updateBusType) {
         return response({
           res,
           status: 200,
-          message: "Bus route updated successfully!",
-          data: updatedBusRoute,
+          message: "Bus type updated successfully!",
+          data: updateBusType,
         });
       } else {
         return response({
           res,
           status: 404,
-          message: "Bus route not found",
+          message: "Bus type not found",
         });
       }
     } catch (error) {
+      // Handle errors and return appropriate responses
       return response({
         res,
         status: 500,
-        message: "An error occurred while updating the bus route",
+        message: "An error occurred while updating the bus type",
         error: error.message,
       });
     }
   })
 );
 
-// Delete a bus route
+// Delete a bus type
 router.delete(
   "/:id",
   asyncHandler(async (req, res) => {
     const { id } = req.params;
 
     try {
-      const deletedBusRoute = await BusRoute.findByIdAndDelete(id);
+      const deleteBusType = await BusType.findByIdAndDelete(id);
 
-      if (deletedBusRoute) {
+      if (deleteBusType) {
         return response({
           res,
           status: 200,
-          message: "Bus route deleted successfully!",
+          message: "Bus type deleted successfully!",
         });
       } else {
         return response({
           res,
           status: 404,
-          message: "Bus route not found",
+          message: "Bus type not found",
         });
       }
     } catch (error) {
+      // Handle errors and return appropriate responses
       return response({
         res,
         status: 500,
-        message: "An error occurred while deleting the bus route",
+        message: "An error occurred while deleting the bus type",
         error: error.message,
       });
     }

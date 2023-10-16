@@ -6,7 +6,6 @@ import FormInput from "../../components/FormInput";
 import { validationSchema } from "../../schemas/ValidationSchema";
 
 const AddBusRoutes = () => {
-  
   const [busType, setBusType] = useState([]);
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
@@ -28,6 +27,7 @@ const AddBusRoutes = () => {
       onSubmit: (values, { resetForm }) => {
         values.intermediateStops = [];
 
+        //call backend API - add bus route
         axios
           .post("http://localhost:8000/api/v1/busroute/", values)
           .then((res) => {
@@ -42,6 +42,7 @@ const AddBusRoutes = () => {
       },
     });
 
+  //call backend API - retriew bus types
   useEffect(() => {
     axios
       .get("http://localhost:8000/api/v1/bustype")
@@ -57,10 +58,14 @@ const AddBusRoutes = () => {
   return (
     <div className="mx-auto mt-4 ml-10 mr-6">
       <div>
-        <p>Add a bus route</p>
+        <p>
+          <b>Add a bus route</b>
+        </p>
       </div>
 
       <div className="mx-auto">
+        
+        {/* form */}
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label htmlFor="busType" className="block mb-2 text-black">

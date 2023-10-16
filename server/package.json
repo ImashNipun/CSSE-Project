@@ -20,7 +20,10 @@
     "express-async-handler": "^1.2.0",
     "http-errors": "^2.0.0",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^7.6.1"
+    "mongoose": "^7.6.1",
+    "paypal-rest-sdk": "^1.8.1",
+    "stripe": "^13.10.0",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.23.2",

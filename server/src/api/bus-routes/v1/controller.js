@@ -22,7 +22,7 @@ router.post(
     } catch (error) {
       return response({
         res,
-        status: 500,
+        status: 400,
         message: "An error occurred while creating a bus route",
         error: error.message,
       });

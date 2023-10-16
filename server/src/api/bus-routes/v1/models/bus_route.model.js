@@ -4,7 +4,7 @@ const busRouteSchema = new mongoose.Schema({
   busType: {
     type: mongoose.Schema.Types.ObjectId, // Reference to BusType model
     ref: "BusType",
-    required: true,
+    // required: true,
   },
   routeName: {
     type: String,

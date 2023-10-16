@@ -16,10 +16,12 @@ const SideBar = () => {
 
   const location = useLocation();
 
+  //set active items
   const handleItemClick = (itemName) => {
     setActiveItem(itemName);
   };
 
+  //get active item's location
   useEffect(() => {
     const getActiveItem = (location) => {
       if (location.pathname === "/analytics-overview") {
@@ -38,13 +40,8 @@ const SideBar = () => {
 
   return (
     <div className="h-screen bg-gray-200 sadow">
-
       <div className="flex items-center">
-        <img
-          src={img}
-          alt="Your Logo"
-          className="py-3 mb-1 ml-4 w-60"
-        />
+        <img src={img} alt="Your Logo" className="py-3 mb-1 ml-4 w-60" />
       </div>
 
       <Link to={"/analytics-overview"}>
@@ -67,7 +64,7 @@ const SideBar = () => {
         </div>
       </Link>
 
-      <Link to={"/passenger-traffic"}>
+      <Link to={"/#"}>
         <div
           className={`flex items-center py-4 px-8 ${
             activeItem === "Passenger Traffic"
@@ -87,7 +84,7 @@ const SideBar = () => {
         </div>
       </Link>
 
-      <Link to={"/"}>
+      <Link to={"/#"}>
         <div
           className={`flex items-center py-4 px-8 ${
             activeItem === "Fare Collection"
@@ -127,7 +124,7 @@ const SideBar = () => {
         </div>
       </Link>
 
-      <Link to={"/"}>
+      <Link to={"/#"}>
         <div
           className={`flex items-center py-4 px-8 ${
             activeItem === "Ticket Inspectors"
@@ -147,7 +144,7 @@ const SideBar = () => {
         </div>
       </Link>
 
-      <Link to={"/"}>
+      <Link to={"/#"}>
         <div
           className={`flex items-center py-4 px-8 ${
             activeItem === "Compliments"

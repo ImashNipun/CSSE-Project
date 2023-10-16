@@ -7,12 +7,15 @@ const Layout = () => {
   return (
     <div className="flex w-full">
       <div className="fixed w-full">
+        {/* navbar */}
         <Navbar />
       </div>
-      <div className="flex flex-1 fixed">
+      <div className="fixed flex flex-1">
+        {/* sidebar */}
         <Sidebar />
       </div>
-      <div className="flex-grow p-4 ml-60 mt-20">
+      <div className="flex-grow p-4 mt-20 ml-60">
+        {/* content */}
         <Outlet />
       </div>
     </div>

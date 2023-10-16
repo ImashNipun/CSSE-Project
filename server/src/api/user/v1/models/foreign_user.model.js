@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const userSchema = new mongoose.Schema({
+const foreignUserSchema = new mongoose.Schema({
   user_name: {
     type: String,
     required: true,
@@ -9,13 +9,13 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  password: {
+  temp_id: {
     type: String,
     required: true,
   },
   user_type: {
     type: String,
-    required: true,
+    default: "foreign",
   },
   transaction_id: {
     type: String,
@@ -23,6 +23,6 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-const userModel = mongoose.model('Users' ,userSchema);
+const foreignUserModel = mongoose.model("Foreign_Users", foreignUserSchema);
 
-export default userModel; 
+export default foreignUserModel;

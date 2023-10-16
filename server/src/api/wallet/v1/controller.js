@@ -8,6 +8,7 @@ import { response } from "../../../utils/response";
 
 const app = express.Router();
 
+// Topup user account using paypal
 app.post("/paypal/topup", async (req, res) => {
   const payload = req.body;
   const transaction = await Paypal.create(payload);
@@ -18,6 +19,8 @@ app.post("/paypal/topup", async (req, res) => {
   });
 });
 
+
+// Topup user account using topup shop
 app.post("/shop/topup", async (req, res) => {
   const { user_id, user_type, transaction_id, amount } = req.body;
 
@@ -57,6 +60,7 @@ app.post("/shop/topup", async (req, res) => {
   });
 });
 
+// Refund topped up money using topup shop
 app.post("/shop/refund", async (req, res) => {
   const { user_id, transaction_id, amount } = req.body;
 
@@ -87,6 +91,8 @@ app.post("/shop/refund", async (req, res) => {
   });
 });
 
+
+// Get all topup transactions of a user
 app.get("/topup", async (req, res) => {
   const user_id = req.query.uid;
   const user_type = req.query.type;
@@ -119,6 +125,7 @@ app.get("/topup", async (req, res) => {
   });
 });
 
+// Get all refund transactions of a user
 app.get("/refund", async (req, res) => {
   const user_id = req.query.uid;
   const user_type = req.query.type;
@@ -153,6 +160,7 @@ app.get("/refund", async (req, res) => {
   });
 });
 
+// Get all paypal transactions of a user
 app.get("/paypal/:uid", async (req, res) => {
   const user_id = req.params.uid;
 

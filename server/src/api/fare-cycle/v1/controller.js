@@ -1,159 +1,162 @@
 import express from "express";
-import BusRoute from "./models/bus_route.model";
+import FareCycle from "./models/fare_cycle.model";
 import { response } from "../../../utils";
 import asyncHandler from "express-async-handler";
 
 const router = express.Router();
 
-// Create a new bus route
+// Create a new fare cycle
 router.post(
   "/",
   asyncHandler(async (req, res) => {
     try {
-      const busRouteData = req.body;
-      const newBusRoute = await BusRoute.create(busRouteData);
+      const fareCycle = req.body;
+
+      const newFareCycle = await FareCycle.create(fareCycle);
 
       return response({
         res,
         status: 201,
-        message: "New bus route created successfully!",
-        data: newBusRoute,
+        message: "New fare cycle created successfully!",
+        data: newFareCycle,
       });
     } catch (error) {
+      // Handle errors and return appropriate responses
       return response({
         res,
         status: 500,
-        message: "An error occurred while creating a bus route",
+        message: "An error occurred while creating a fare cycle",
         error: error.message,
       });
     }
   })
 );
 
-// Read all bus routes
+// Get all fare cycles
 router.get(
   "/",
   asyncHandler(async (req, res) => {
     try {
-      const allBusRoutes = await BusRoute.find()
-        .populate("busType")
-        .populate("intermediateStops.fare")
-        .lean();
+      const allFareCycles = await FareCycle.find().lean();
 
       return response({
         res,
         status: 200,
-        data: allBusRoutes,
+        data: allFareCycles,
       });
     } catch (error) {
+      // Handle errors and return appropriate responses
       return response({
         res,
         status: 500,
-        message: "An error occurred while fetching bus routes",
+        message: "An error occurred while fetching fare cycles",
         error: error.message,
       });
     }
   })
 );
 
-// Read one bus route
+// Get one fare cycle
 router.get(
   "/:id",
   asyncHandler(async (req, res) => {
     const { id } = req.params;
 
     try {
-      const singleBusRoute = await BusRoute.findById(id)
-        .populate("busType")
-        .populate("intermediateStops.fare")
-        .lean();
+      const singleFareCycle = await FareCycle.findById(id).lean();
 
-      if (singleBusRoute) {
+      if (singleFareCycle) {
         return response({
           res,
           status: 200,
-          data: singleBusRoute,
+          data: singleFareCycle,
         });
       } else {
         return response({
           res,
           status: 404,
-          message: "Bus route not found",
+          message: "Fare cycle not found",
         });
       }
     } catch (error) {
+      // Handle errors and return appropriate responses
       return response({
         res,
         status: 500,
-        message: "An error occurred while fetching the bus route",
+        message: "An error occurred while fetching the fare cycle",
         error: error.message,
       });
     }
   })
 );
 
-// Update a bus route
+// Update a fare cycle
 router.put(
   "/:id",
   asyncHandler(async (req, res) => {
     const { id } = req.params;
-    const updatedBusRouteData = req.body;
+    const fareCycle = req.body;
 
     try {
-      const updatedBusRoute = await BusRoute.findByIdAndUpdate(id, updatedBusRouteData).lean();
+      const updateFareCycle = await FareCycle.findByIdAndUpdate(
+        id,
+        fareCycle
+      ).lean();
 
-      if (updatedBusRoute) {
+      if (updateFareCycle) {
         return response({
           res,
           status: 200,
-          message: "Bus route updated successfully!",
-          data: updatedBusRoute,
+          message: "Fare cycle updated successfully!",
+          data: updateFareCycle,
         });
       } else {
         return response({
           res,
           status: 404,
-          message: "Bus route not found",
+          message: "Fare cycle not found",
         });
       }
     } catch (error) {
+      // Handle errors and return appropriate responses
       return response({
         res,
         status: 500,
-        message: "An error occurred while updating the bus route",
+        message: "An error occurred while updating the fare cycle",
         error: error.message,
       });
     }
   })
 );
 
-// Delete a bus route
+// Delete a fare cycle
 router.delete(
   "/:id",
   asyncHandler(async (req, res) => {
     const { id } = req.params;
 
     try {
-      const deletedBusRoute = await BusRoute.findByIdAndDelete(id);
+      const deleteFareCycle = await FareCycle.findByIdAndDelete(id);
 
-      if (deletedBusRoute) {
+      if (deleteFareCycle) {
         return response({
           res,
           status: 200,
-          message: "Bus route deleted successfully!",
+          message: "Fare cycle deleted successfully!",
         });
       } else {
         return response({
           res,
           status: 404,
-          message: "Bus route not found",
+          message: "Fare cycle not found",
         });
       }
     } catch (error) {
+      // Handle errors and return appropriate responses
       return response({
         res,
         status: 500,
-        message: "An error occurred while deleting the bus route",
+        message: "An error occurred while deleting the fare cycle",
         error: error.message,
       });
     }

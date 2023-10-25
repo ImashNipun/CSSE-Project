@@ -92,7 +92,7 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem("TOKEN_KEY", result?.data?.data?.token);
       localStorage.setItem("USER_DETAILS", userDetails);
     } catch (error) {
-      console.log(`${e.message}:`, error);
+      console.log(`${error.message}:`, error);
     }
   };
 

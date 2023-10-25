@@ -9,6 +9,7 @@ import {
   FaUserTie,
   FaSmile,
   FaMapMarkerAlt,
+  FaBusAlt,
 } from "react-icons/fa";
 
 const SideBar = () => {
@@ -33,6 +34,13 @@ const SideBar = () => {
         location.pathname === "/add-bus-routes"
       ) {
         setActiveItem("Bus Routes");
+      }
+      
+      if (
+        location.pathname === "/bus-types" ||
+        location.pathname === "/add-bus-types"
+      ) {
+        setActiveItem("Bus Types");
       }
     };
     getActiveItem(location);
@@ -101,6 +109,26 @@ const SideBar = () => {
             }`}
           />
           <span>Fare Collection</span>
+        </div>
+      </Link>
+      
+      <Link to={"/bus-types"}>
+        <div
+          className={`flex items-center py-4 px-8 ${
+            activeItem === "Bus Types"
+              ? "bg-sky-100 opacity-100  text-sky-400"
+              : "hover:text-sky-400"
+          }`}
+          onClick={() => handleItemClick("Bus Types")}
+        >
+          <FaBusAlt
+            className={`text-lg mr-2 ${
+              activeItem === "Bus Types"
+                ? "text-sky-400"
+                : "hover:text-sky-400"
+            }`}
+          />
+          <span>Bus Types</span>
         </div>
       </Link>
 

@@ -7,6 +7,8 @@ import PassengerTraffic from "./pages/PassengerTraffic";
 import BusRoutesList from "./pages/busroutes/BusRoutesList";
 import AddBusRoutes from "./pages/busroutes/AddBusRoutes";
 import UpdateBusRoute from "./pages/busroutes/UpdateBusRoute";
+import BusTypeList from "./pages/bustypes/BusTypeList";
+import AddBusType from "./pages/bustypes/AddBusType";
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
           <Route path="bus-routes" element={<BusRoutesList />} />
           <Route path="add-bus-routes" element={<AddBusRoutes />} />
           <Route path="update-bus-route" element={<UpdateBusRoute />} />
+          <Route path="bus-types" element={<BusTypeList />} />
+          <Route path="add-bus-types" element={<AddBusType />} />
         </Route>
       </Routes>
     </BrowserRouter>

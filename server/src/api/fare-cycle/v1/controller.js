@@ -1,5 +1,5 @@
 import express from "express";
-import FareCycle from "./models/fare_cycle.model";
+import fareCycleModel from "./models/fare_cycle.model";
 import { response } from "../../../utils";
 import asyncHandler from "express-async-handler";
 
@@ -10,9 +10,9 @@ router.post(
   "/",
   asyncHandler(async (req, res) => {
     try {
-      const fareCycle = req.body;
+      const fareCycleData = req.body;
 
-      const newFareCycle = await FareCycle.create(fareCycle);
+      const newFareCycle = await fareCycleModel.create(fareCycleData);
 
       return response({
         res,
@@ -32,12 +32,14 @@ router.post(
   })
 );
 
-// Get all fare cycles
+// Get all fare cycles with type populated
 router.get(
   "/",
   asyncHandler(async (req, res) => {
     try {
-      const allFareCycles = await FareCycle.find().lean();
+      const allFareCycles = await fareCycleModel.find()
+        .populate("type") // Populate the "type" field
+        .lean();
 
       return response({
         res,
@@ -56,14 +58,16 @@ router.get(
   })
 );
 
-// Get one fare cycle
+// Get one fare cycle with type populated
 router.get(
   "/:id",
   asyncHandler(async (req, res) => {
     const { id } = req.params;
 
     try {
-      const singleFareCycle = await FareCycle.findById(id).lean();
+      const singleFareCycle = await fareCycleModel.findById(id)
+        .populate("type") // Populate the "type" field
+        .lean();
 
       if (singleFareCycle) {
         return response({
@@ -95,12 +99,13 @@ router.put(
   "/:id",
   asyncHandler(async (req, res) => {
     const { id } = req.params;
-    const fareCycle = req.body;
+    const fareCycleData = req.body;
 
     try {
-      const updateFareCycle = await FareCycle.findByIdAndUpdate(
+      const updateFareCycle = await fareCycleModel.findByIdAndUpdate(
         id,
-        fareCycle
+        fareCycleData,
+        { new: true } // This option returns the updated document
       ).lean();
 
       if (updateFareCycle) {
@@ -136,7 +141,7 @@ router.delete(
     const { id } = req.params;
 
     try {
-      const deleteFareCycle = await FareCycle.findByIdAndDelete(id);
+      const deleteFareCycle = await fareCycleModel.findByIdAndDelete(id);
 
       if (deleteFareCycle) {
         return response({

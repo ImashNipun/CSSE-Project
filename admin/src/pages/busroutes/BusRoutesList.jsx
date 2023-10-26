@@ -23,7 +23,7 @@ const BusRoutesList = () => {
   }, []);
 
   const navigateToReportPage = () => {
-    navigate("/#", {
+    navigate("/bus-route-report", {
       replace: true,
       state: {
         busRoutes,
@@ -118,7 +118,9 @@ const BusRoutesList = () => {
                       return (
                         <tr key={index}>
                           <td className="px-6 py-4 whitespace-nowrap">#</td>
-                          <td className="px-6 py-4 whitespace-nowrap">Normal</td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            Normal
+                          </td>
                           <td className="px-6 py-4 whitespace-nowrap">
                             {busRoutes.routeName}
                           </td>

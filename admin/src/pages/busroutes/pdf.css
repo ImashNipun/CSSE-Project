@@ -1,0 +1,86 @@
+/* .letterhead-container {
+    text-align: center;
+  }
+  
+.company-logo {
+    display: block;
+    margin: 0 auto;
+  }
+
+  .contact-info p {
+
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .contact-info p svg {
+   
+    margin-right: 10px;
+   
+  } */
+
+  /* pdf.css */
+.letterhead-container {
+    text-align: center; /* Center the content */
+    padding: 20px;
+    background-color: #f0f0f0; /* Add a background color if needed */
+  }
+  
+  .blue-line {
+    background-color: #5385cc; /* Define the color for your blue line */
+    height: 3px;
+  }
+  
+  .company-logo {
+    display: block;
+    margin: 0 auto; /* Center the logo */
+    max-width: 400px; /* Set a max-width */
+  }
+  
+  .contact-info {
+    text-align: center; /* Center the contact info */
+    margin-top: 10px;
+  }
+  
+  .blue-line-last {
+    background-color: #5385cc; /* Define the color for your blue line */
+    height: 3px;
+    margin-top: 10px;
+  }
+  .contact-info p {
+    display: flex;
+    align-items: center; /* Center the icons with their respective text */
+    justify-content: center;
+    margin-top: 10px;
+    font-size: 18px;
+  }
+  /* You can also style the icons if needed */
+  .contact-info p svg {
+    vertical-align: middle;
+    margin-right: 10px;
+    font-size: 18px;
+  }
+  
+
+#generate-pdf-button {
+    background-color: #5385cc;
+    /* color: white; */
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 10px;
+  }
+  
+  
+/* Bold the topic */
+.bold-heading {
+    font-weight: bold;
+    color: #5385cc;
+    font-size: 20px;
+  }
+
+  th, td {
+    padding: 8px;
+    text-align: left;
+  }

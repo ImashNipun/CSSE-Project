@@ -9,6 +9,7 @@ import AddBusRoutes from "./pages/busroutes/AddBusRoutes";
 import UpdateBusRoute from "./pages/busroutes/UpdateBusRoute";
 import BusTypeList from "./pages/bustypes/BusTypeList";
 import AddBusType from "./pages/bustypes/AddBusType";
+import BusRoutePdf from "./pages/busroutes/BusRoutePdf";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="bus-types" element={<BusTypeList />} />
           <Route path="add-bus-types" element={<AddBusType />} />
         </Route>
+        <Route path="bus-route-report" element={<BusRoutePdf />} />
       </Routes>
     </BrowserRouter>
   );

@@ -7,8 +7,11 @@
   }
   
   .main-title {
+    font-weight: bold;
     display: flex;
     justify-content: space-between;
+    color: #5385cc;
+    font-size: 20px;
   }
   
   .main-cards {
@@ -27,19 +30,19 @@
   }
   
   .card:first-child {
-    background-color: #2962ff;
+    background-color: #5385cc;
   }
   
   .card:nth-child(2) {
-    background-color: #ff6d00;
+    background-color: #5385cc;
   }
   
   .card:nth-child(3) {
-    background-color: #2e7d32;
+    background-color: #5385cc;
   }
   
   .card:nth-child(4) {
-    background-color: #d50000;
+    background-color: #5385cc;
   }
   
   .card-inner {
@@ -53,13 +56,52 @@
   }
   
   .charts {
-    display: contents;
+    display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
     margin-top: 60px;
     height: 300px;
   }
-  
+
+ /* Bus Types List Section */
+.bus-types-list {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #ffffff; /* White background */
+  border-radius: 5px;
+  color: #333; /* Dark text color */
+
+  /* Center the content */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  /* Box shadow for a subtle elevation */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.bus-types-list h2 {
+  font-weight: 700;
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #5385cc; /* Dark text color */
+}
+
+.bus-types-list ul {
+  list-style: none;
+  padding: 0;
+  text-align: center; /* Center align the list items */
+}
+
+.bus-types-list li {
+  font-size: 15px;
+  margin-bottom: 10px;
+}
+
+/* Add spacing between the list items */
+.bus-types-list li:not(:last-child) {
+  margin-bottom: 10px;
+}
   /* End Main  */
   
   

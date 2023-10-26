@@ -3,7 +3,7 @@ import axios from "axios";
 import { useFormik } from "formik";
 import Button from "../../components/Button";
 import FormInput from "../../components/FormInput";
-import { validationSchema } from "../../schemas/ValidationSchema";
+import { busRouteValidationSchema } from "../../schemas/ValidationSchema";
 
 const AddBusRoutes = () => {
   const [busType, setBusType] = useState([]);
@@ -22,7 +22,7 @@ const AddBusRoutes = () => {
         schedule: "",
       },
 
-      validationSchema: validationSchema,
+      validationSchema: busRouteValidationSchema,
 
       onSubmit: (values, { resetForm }) => {
         values.intermediateStops = [];
@@ -48,7 +48,7 @@ const AddBusRoutes = () => {
       .get("http://localhost:8000/api/v1/bustype")
       .then((res) => {
         setBusType(res?.data?.data);
-        console.log(res.data.data);
+        // console.log(res.data.data);
       })
       .catch((error) => {
         console.log(error);
@@ -57,7 +57,7 @@ const AddBusRoutes = () => {
 
   return (
     <div className="mx-auto mt-4 ml-10 mr-6">
-      <div>
+      <div className="mb-5">
         <p>
           <b>Add a bus route</b>
         </p>

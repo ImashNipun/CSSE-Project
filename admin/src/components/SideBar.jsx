@@ -35,12 +35,16 @@ const SideBar = () => {
       ) {
         setActiveItem("Bus Routes");
       }
-      
+
       if (
         location.pathname === "/bus-types" ||
         location.pathname === "/add-bus-types"
       ) {
         setActiveItem("Bus Types");
+      }
+
+      if (location.pathname === "/add-fare-cycle") {
+        setActiveItem("Fare Cycle");
       }
     };
     getActiveItem(location);
@@ -92,26 +96,26 @@ const SideBar = () => {
         </div>
       </Link>
 
-      <Link to={"/#"}>
+      <Link to={"/add-fare-cycle"}>
         <div
           className={`flex items-center py-4 px-8 ${
-            activeItem === "Fare Collection"
+            activeItem === "Fare Cycle"
               ? "bg-sky-100 opacity-100  text-sky-400"
               : "hover:text-sky-400"
           }`}
-          onClick={() => handleItemClick("Fare Collection")}
+          onClick={() => handleItemClick("Fare Cycle")}
         >
           <FaMoneyBillWave
             className={`text-lg mr-2 ${
-              activeItem === "Fare Collection"
+              activeItem === "Fare Cycle"
                 ? "text-sky-400"
                 : "hover:text-sky-400"
             }`}
           />
-          <span>Fare Collection</span>
+          <span>Fare Cycle</span>
         </div>
       </Link>
-      
+
       <Link to={"/bus-types"}>
         <div
           className={`flex items-center py-4 px-8 ${
@@ -123,9 +127,7 @@ const SideBar = () => {
         >
           <FaBusAlt
             className={`text-lg mr-2 ${
-              activeItem === "Bus Types"
-                ? "text-sky-400"
-                : "hover:text-sky-400"
+              activeItem === "Bus Types" ? "text-sky-400" : "hover:text-sky-400"
             }`}
           />
           <span>Bus Types</span>

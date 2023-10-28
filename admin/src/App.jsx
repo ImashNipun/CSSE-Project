@@ -10,6 +10,8 @@ import UpdateBusRoute from "./pages/busroutes/UpdateBusRoute";
 import BusTypeList from "./pages/bustypes/BusTypeList";
 import AddBusType from "./pages/bustypes/AddBusType";
 
+import { EnterFare } from "./pages/farecycle/EnterFare";
+
 function App() {
   return (
     <BrowserRouter>
@@ -23,8 +25,11 @@ function App() {
           <Route path="update-bus-route" element={<UpdateBusRoute />} />
           <Route path="bus-types" element={<BusTypeList />} />
           <Route path="add-bus-types" element={<AddBusType />} />
+          <Route path="add-fare-cycle" element={<EnterFare />} />
         </Route>
       </Routes>
+
+      
     </BrowserRouter>
   );
 }

@@ -1,24 +1,29 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-const paypalSchema = new mongoose.Schema({
+const paypalSchema = new mongoose.Schema(
+  {
     user_id: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     amount: {
-        type: Number,
-        required: true
+      type: Number,
+      required: true,
     },
     status: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     payment_id: {
-        type: String,
-        required: true
-    }
-});
+      type: String,
+      required: true,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
 
-const paypalModel = mongoose.model('PayPal', paypalSchema);
+const paypalModel = mongoose.model("PayPal", paypalSchema);
 
 export default paypalModel;

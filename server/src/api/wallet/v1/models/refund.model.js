@@ -1,20 +1,25 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-const refundSchema = new mongoose.Schema({
+const refundSchema = new mongoose.Schema(
+  {
     user_id: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     amount: {
-        type: Number,
-        required: true
+      type: Number,
+      required: true,
     },
     shop_id: {
-        type: String,
-        required: true
-    }
-});
+      type: String,
+      required: true,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
 
-const refundModel = mongoose.model('Refund', refundSchema);
+const refundModel = mongoose.model("Refund", refundSchema);
 
 export default refundModel;

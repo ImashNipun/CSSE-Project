@@ -61,7 +61,7 @@ const RefundModal = ({ isOpen, onClose, onSubmit }) => {
                 htmlFor="amount"
                 className="block text-sm font-medium text-gray-700"
               >
-                Customer Transaction ID
+                Shop Transaction ID
               </label>
               <Field
                 type="text"

@@ -170,25 +170,6 @@ const AddBusRoutes = () => {
 
           <div className="mb-4">
             <FormInput
-              label="Intermediate Stops"
-              htmlFor="intermediateStops"
-              type="text"
-              id="intermediateStops"
-              name="intermediateStops"
-              onBlur={handleBlur}
-              onChange={handleChange}
-              value={values.intermediateStops}
-              error={touched.intermediateStops && errors.intermediateStops}
-            ></FormInput>
-            {touched.intermediateStops && errors.intermediateStops ? (
-              <p className="mt-2 text-xs text-red-500">
-                {errors.intermediateStops}
-              </p>
-            ) : null}
-          </div>
-
-          <div className="mb-4">
-            <FormInput
               label="Distance"
               htmlFor="distance"
               type="text"
@@ -235,6 +216,27 @@ const AddBusRoutes = () => {
             ></FormInput>
             {touched.schedule && errors.schedule ? (
               <p className="mt-2 text-xs text-red-500">{errors.schedule}</p>
+            ) : null}
+          </div>
+          
+          <p className="my-5">Intermediate Bus stops List</p>
+          
+          <div className="mb-4">
+            <FormInput
+              label="Intermediate Stops"
+              htmlFor="intermediateStops"
+              type="text"
+              id="intermediateStops"
+              name="intermediateStops"
+              onBlur={handleBlur}
+              onChange={handleChange}
+              value={values.intermediateStops}
+              error={touched.intermediateStops && errors.intermediateStops}
+            ></FormInput>
+            {touched.intermediateStops && errors.intermediateStops ? (
+              <p className="mt-2 text-xs text-red-500">
+                {errors.intermediateStops}
+              </p>
             ) : null}
           </div>
 

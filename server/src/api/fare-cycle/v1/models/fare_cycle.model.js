@@ -6,14 +6,12 @@ const fareCycleSchema = new mongoose.Schema({
     ref: "BusType",
     required: true,
   },
-  no: {
-    type: Number,
-    required: true,
-  },
-  fare: {
-    type: Number,
-    required: true,
-  },
+  fare: [
+    {
+      no: Number,
+      price: Number,
+    },
+  ],
 });
 
 const fareCycleModel = mongoose.model("FareCycle", fareCycleSchema);

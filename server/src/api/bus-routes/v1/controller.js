@@ -35,10 +35,7 @@ router.get(
   "/",
   asyncHandler(async (req, res) => {
     try {
-      const allBusRoutes = await BusRoute.find()
-        .populate("busType")
-        .populate("intermediateStops.fare")
-        .lean();
+      const allBusRoutes = await BusRoute.find().populate("busType").lean();
 
       return response({
         res,
@@ -65,7 +62,6 @@ router.get(
     try {
       const singleBusRoute = await BusRoute.findById(id)
         .populate("busType")
-        .populate("intermediateStops.fare")
         .lean();
 
       if (singleBusRoute) {
@@ -100,7 +96,11 @@ router.put(
     const updatedBusRouteData = req.body;
 
     try {
-      const updatedBusRoute = await BusRoute.findByIdAndUpdate(id, updatedBusRouteData).lean();
+      const updatedBusRoute = await BusRoute.findByIdAndUpdate(
+        id,
+        updatedBusRouteData,
+        { new: true }
+      ).lean();
 
       if (updatedBusRoute) {
         return response({

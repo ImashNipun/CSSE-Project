@@ -6,17 +6,21 @@ import FormInput from "../../components/FormInput";
 import { busRouteValidationSchema } from "../../schemas/ValidationSchema";
 
 const AddBusRoutes = () => {
+  
+  //useState hook
   const [busType, setBusType] = useState([]);
+  const [intermediateStops, setintermediateStops] = useState([]);
+  const [fare, setFare] = useState([]);
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues: {
-        busType: "",
+        busType: "6539dd954854863b3ef73f18",
         routeName: "",
         routeNumber: "",
         beginning: "",
         destination: "",
-        intermediateStops: "",
+        intermediateStops: [{ no: "", stop: "", fare: "" }],
         distance: "",
         travelTime: "",
         schedule: "",
@@ -25,7 +29,16 @@ const AddBusRoutes = () => {
       validationSchema: busRouteValidationSchema,
 
       onSubmit: (values, { resetForm }) => {
-        values.intermediateStops = [];
+        const modified = values.intermediateStops.map(
+          (intermediateStops, index) => ({
+            no: index.toString(),
+            stop: intermediateStops.stop,
+            fare: fare[0].fare[index].price,
+          })
+        );
+
+        // Update the 'fare' property with the modified array
+        values.intermediateStops = modified;
 
         //call backend API - add bus route
         axios
@@ -41,6 +54,8 @@ const AddBusRoutes = () => {
         console.log(values);
       },
     });
+    
+  //useEffect hooks
 
   //call backend API - retriew bus types
   useEffect(() => {
@@ -48,12 +63,52 @@ const AddBusRoutes = () => {
       .get("http://localhost:8000/api/v1/bustype")
       .then((res) => {
         setBusType(res?.data?.data);
-        // console.log(res.data.data);
       })
       .catch((error) => {
         console.log(error);
       });
   }, []);
+
+  //call backend API - retriew intermediateStops by bus type
+  useEffect(() => {
+    if (values.busType) {
+      // Check if busType is not empty
+      axios
+        .get(`http://localhost:8000/api/v1/farecycle/byType/${values.busType}`)
+        .then((res) => {
+          setintermediateStops(res?.data?.data);
+          setFare(res?.data?.data);
+          console.log(res.data.data[0].fare[0].price);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [values.busType]);
+
+  const handleAddIntermediateStops = () => {
+    const newFare = { no: "", stop: "", fare: "" };
+    const updatedIntermediateStops = [...values.intermediateStops, newFare];
+
+    handleChange({
+      target: {
+        name: "intermediateStops",
+        value: updatedIntermediateStops,
+      },
+    });
+  };
+
+  const handleRemoveIntermediateStops = (index) => {
+    const updatedIntermediateStops = [...values.intermediateStops];
+    updatedIntermediateStops.splice(index, 1);
+
+    handleChange({
+      target: {
+        name: "intermediateStops",
+        value: updatedIntermediateStops,
+      },
+    });
+  };
 
   return (
     <div className="mx-auto mt-4 ml-10 mr-6">
@@ -64,7 +119,6 @@ const AddBusRoutes = () => {
       </div>
 
       <div className="mx-auto">
-        
         {/* form */}
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
@@ -77,9 +131,14 @@ const AddBusRoutes = () => {
               onBlur={handleBlur}
               onChange={handleChange}
               value={values.busType}
-              className="w-full px-3 py-2 bg-gray-200 border rounded"
+              className={`w-full px-3 py-2 bg-gray-200 border rounded ${
+                errors.busType && touched.busType
+                  ? "border-red-500  bg-red-100"
+                  : "border-gray-300 focus:border-gray-400"
+              }`}
             >
-              <option value="">Open this select menu</option>
+              {/* React Conditional Rendering Design Pattern */}
+              <option value="6539dd954854863b3ef73f18">Normal</option>
               {busType
                 ? busType.map((busType, busTypeIndex) => {
                     return (
@@ -90,6 +149,9 @@ const AddBusRoutes = () => {
                   })
                 : null}
             </select>
+            {touched.busType && errors.busType ? (
+              <p className="mt-2 text-xs text-red-500">{errors.busType}</p>
+            ) : null}
           </div>
 
           <div className="flex mb-4">
@@ -218,27 +280,89 @@ const AddBusRoutes = () => {
               <p className="mt-2 text-xs text-red-500">{errors.schedule}</p>
             ) : null}
           </div>
-          
+
           <p className="my-5">Intermediate Bus stops List</p>
-          
-          <div className="mb-4">
-            <FormInput
-              label="Intermediate Stops"
-              htmlFor="intermediateStops"
-              type="text"
-              id="intermediateStops"
-              name="intermediateStops"
-              onBlur={handleBlur}
-              onChange={handleChange}
-              value={values.intermediateStops}
-              error={touched.intermediateStops && errors.intermediateStops}
-            ></FormInput>
-            {touched.intermediateStops && errors.intermediateStops ? (
-              <p className="mt-2 text-xs text-red-500">
-                {errors.intermediateStops}
-              </p>
-            ) : null}
-          </div>
+
+          {values.intermediateStops.map((intermediateStopsData, index) => (
+            <div key={index} className="flex mb-4">
+              <div className="w-1/6 me-4">
+                <FormInput
+                  label={`Intermediate Stop ${index + 1}`}
+                  htmlFor={`intermediateStops[${index}].no`}
+                  type="text"
+                  id={`intermediateStops[${index}].no`}
+                  name={`intermediateStops[${index}].no`}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={index}
+                ></FormInput>
+              </div>
+
+              <div className="w-4/6 me-4">
+                <FormInput
+                  label="Stops"
+                  htmlFor={`intermediateStops[${index}].stop`}
+                  type="text"
+                  id={`intermediateStops[${index}]].stop`}
+                  name={`intermediateStops[${index}]].stop`}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={intermediateStopsData.stop}
+                  error={
+                    touched.intermediateStops &&
+                    touched.intermediateStops[index] &&
+                    errors.intermediateStops &&
+                    errors.intermediateStops[index] &&
+                    errors.intermediateStops[index].stop
+                  }
+                ></FormInput>
+                {touched.intermediateStops &&
+                touched.intermediateStops[index] &&
+                errors.intermediateStops &&
+                errors.intermediateStops[index] &&
+                errors.intermediateStops[index].stop ? (
+                  <p className="mt-2 text-xs text-red-500">
+                    {errors.intermediateStops[index].stop}
+                  </p>
+                ) : null}
+              </div>
+
+              <div className="w-1/6">
+                <FormInput
+                  label="Fare"
+                  htmlFor={`intermediateStops[${index}].fare`}
+                  type="text"
+                  id={`intermediateStops[${index}].fare`}
+                  name={`intermediateStops[${index}].fare`}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={intermediateStops.map((data) => {
+                    return data.fare[index].price;
+                  })}
+                ></FormInput>
+              </div>
+
+              <div>
+                {values.intermediateStops.length > 1 && (
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveIntermediateStops(index)}
+                    className="px-4 py-2 ml-5 text-white bg-red-500 rounded-md mt-7"
+                  >
+                    Remove
+                  </button>
+                )}
+              </div>
+            </div>
+          ))}
+
+          <button
+            type="button"
+            onClick={handleAddIntermediateStops}
+            className="px-4 py-2 mt-5 mb-8 font-semibold text-blue-700 bg-transparent border border-blue-500 rounded hover:bg-blue-100"
+          >
+            Add new stop
+          </button>
 
           <Button type="submit" name="Submit"></Button>
         </form>

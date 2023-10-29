@@ -168,4 +168,32 @@ router.delete(
   })
 );
 
+router.get(
+  "/byType/:typeId",
+  asyncHandler(async (req, res) => {
+    const { typeId } = req.params;
+
+    try {
+      const allFareCycles = await fareCycleModel
+        .find({ type: typeId }) // Filter by the provided type ID
+        .populate("type")
+        .lean();
+
+      return response({
+        res,
+        status: 200,
+        data: allFareCycles,
+      });
+    } catch (error) {
+      // Handle errors and return appropriate responses
+      return response({
+        res,
+        status: 500,
+        message: "An error occurred while fetching fare cycles by type",
+        error: error.message,
+      });
+    }
+  })
+);
+
 export default router;

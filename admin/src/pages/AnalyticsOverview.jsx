@@ -205,9 +205,9 @@ const AnalyticsOverview = () => {
       <div className="bus-types-list">
         <h2>Bus Types List</h2>
         <ul>
-          {busTypes.map((busType, index) => (
+          {busTypes? busTypes.map((busType, index) => (
             <li key={index}>{busType.type}</li>
-          ))}
+          )):null}
         </ul>
       </div>
 

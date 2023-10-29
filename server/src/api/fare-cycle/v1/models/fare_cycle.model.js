@@ -2,14 +2,14 @@ import mongoose from "mongoose";
 
 const fareCycleSchema = new mongoose.Schema({
   type: {
-    type: mongoose.Schema.Types.ObjectId, // Reference to FareCycle model
+    type: mongoose.Schema.Types.ObjectId,
     ref: "BusType",
     required: true,
   },
   fare: [
     {
       no: Number,
-      price: Number,
+      price: String,
     },
   ],
 });

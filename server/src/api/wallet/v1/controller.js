@@ -97,8 +97,6 @@ app.get("/topup", async (req, res) => {
   const user_id = req.query.uid;
   const user_type = req.query.type;
 
-  console.log(user_id, user_type);
-
   let transaction = [];
 
   if (user_type == "shop") {

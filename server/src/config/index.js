@@ -10,6 +10,7 @@ class envConfigBase {
       MONGODB_URI: Joi.string().required(),
       ACCESS_TOKEN_SECRET: Joi.string().required(),
       ACCESS_TOKEN_EXPIRY: Joi.string().required(),
+      NODE_ENV: Joi.string().valid("development", "production", "test").required(),
     };
   }
 
@@ -19,6 +20,7 @@ class envConfigBase {
       MONGODB_URI: process.env.MONGODB_URI,
       ACCESS_TOKEN_SECRET: process.env.ACCESS_TOKEN_SECRET,
       ACCESS_TOKEN_EXPIRY: process.env.ACCESS_TOKEN_EXPIRY,
+      NODE_ENV: process.env.NODE_ENV,
     };
   }
 }

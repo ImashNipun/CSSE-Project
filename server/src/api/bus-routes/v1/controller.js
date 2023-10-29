@@ -24,7 +24,6 @@ router.post(
         res,
         status: 400,
         message: "An error occurred while creating a bus route",
-        error: error.message,
       });
     }
   })

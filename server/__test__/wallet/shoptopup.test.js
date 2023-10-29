@@ -1,15 +1,30 @@
 import request from "supertest";
 import express from "express";
-const app = express();
+import mongoose from "mongoose";
 import User from "../../src/api/user/v1/models/user.model";
 import Foreign from "../../src/api/user/v1/models/foreign_user.model";
 import topupRoute from "../../src/api/wallet/v1/controller";
+import config from "../../src/config";
 
+const app = express();
 app.use(express.json());
 app.use(topupRoute);
 
+beforeAll(async () => {
+  if (config.NODE_ENV === "test") {
+    await mongoose.connect(config.MONGODB_URI, {
+      useNewUrlParser: true,
+    });
+  }
+});
+
+afterAll(async () => {
+  if (config.NODE_ENV === "test") {
+    await mongoose.connection.close();
+  }
+});
+
 describe("POST /shop/topup", () => {
-  
   // Positive Test Case: User exists (local)
   it("should create a new transaction successfully for local user", async () => {
     const mockRequestBody = {
@@ -20,7 +35,9 @@ describe("POST /shop/topup", () => {
     };
 
     // Mock the User.findOne function to return a valid user
-    User.findOne = jest.fn().mockResolvedValue({ _id: "652cfe3990d210c8cfd5a9ed" });
+    User.findOne = jest
+      .fn()
+      .mockResolvedValue({ _id: "652cfe3990d210c8cfd5a9ed" });
 
     const response = await request(app)
       .post("/shop/topup")
@@ -40,7 +57,9 @@ describe("POST /shop/topup", () => {
     };
 
     // Mock the Foreign.findOne function to return a valid user
-    Foreign.findOne = jest.fn().mockResolvedValue({ _id: "652cfcf16baffbc0781edf23" });
+    Foreign.findOne = jest
+      .fn()
+      .mockResolvedValue({ _id: "652cfcf16baffbc0781edf23" });
 
     const response = await request(app)
       .post("/shop/topup")

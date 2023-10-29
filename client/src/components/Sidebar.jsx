@@ -1,29 +1,137 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import img from "../assets/logo.svg";
 import useAuth from "../hook/useAuth";
 
-const Sidebar = ({ activeTab, handleTabClick }) => {
-  const {onLogout} = useAuth();
-  const tabs = ["home", "wallet", "profile"];
+import {
+  FaHome,
+  FaWallet,
+  FaRegUserCircle,
+  FaSignOutAlt,
+} from "react-icons/fa";
+
+const SideBar = () => {
+  const { auth, onLogout } = useAuth();
+  const [activeItem, setActiveItem] = useState("Home");
+
+  const location = useLocation();
+
+  //set active items
+  const handleItemClick = (itemName) => {
+    setActiveItem(itemName);
+  };
+
+  //get active item's location
+  useEffect(() => {
+    const getActiveItem = (location) => {
+      if (location.pathname === "/profile") {
+        setActiveItem("Profile");
+      }
+
+      if (location.pathname === "/wallet") {
+        setActiveItem("Wallet");
+      }
+
+      if (location.pathname === "/") {
+        setActiveItem("Home");
+      }
+    };
+    getActiveItem(location);
+  }, [location, activeItem]);
 
   return (
-    <div className="w-1/5 h-screen bg-gray-800 text-white p-4">
-      <h2 className="text-2xl font-bold mb-4">User Profile</h2>
-      <ul>
-        {tabs.map((tab) => (
-          <li
-            key={tab}
-            className={`cursor-pointer py-2 ${
-              activeTab === tab ? "text-yellow-400" : ""
+    <div className="h-screen bg-slate-800 sadow">
+      <div className="flex items-center">
+        <img src={img} alt="Your Logo" className="py-3 mb-1 ml-4 w-60 " />
+      </div>
+
+      <Link to={"/"}>
+        <div
+          className={`flex items-center py-4 px-8 ${
+            activeItem === "Home"
+              ? "bg-sky-100 opacity-100  text-sky-400"
+              : "hover:text-sky-400 text-white"
+          }`}
+          onClick={() => handleItemClick("Home")}
+        >
+          <FaHome
+            className={`text-lg mr-2 ${
+              activeItem === "Analytics Overview"
+                ? "text-sky-400"
+                : "hover:text-sky-400"
             }`}
-            onClick={() => handleTabClick(tab)}
+          />
+          <span>Home</span>
+        </div>
+      </Link>
+
+      <Link to={"/wallet"}>
+        <div
+          className={`flex items-center py-4 px-8 ${
+            activeItem === "Wallet"
+              ? "bg-sky-100 opacity-100  text-sky-400"
+              : "hover:text-sky-400 text-white"
+          }`}
+          onClick={() => handleItemClick("Wallet")}
+        >
+          <FaWallet
+            className={`text-lg mr-2 ${
+              activeItem === "Passenger Traffic"
+                ? "text-sky-400"
+                : "hover:text-sky-400"
+            }`}
+          />
+          <span>Wallet</span>
+        </div>
+      </Link>
+
+      {(auth?.user?.user_type === "shop" ||
+        auth?.user?.user_type === "local") && (
+        <Link to={"/profile"}>
+          <div
+            className={`flex items-center py-4 px-8 ${
+              activeItem === "Profile"
+                ? "bg-sky-100 opacity-100  text-sky-400"
+                : "hover:text-sky-400 text-white"
+            }`}
+            onClick={() => handleItemClick("Profile")}
           >
-            {tab}
-          </li>
-        ))}
-        <li className="cursor-pointer py-2" onClick={onLogout}>Logout</li>
-      </ul>
+            <FaRegUserCircle
+              className={`text-lg mr-2 ${
+                activeItem === "Fare Collection"
+                  ? "text-sky-400"
+                  : "hover:text-sky-400 text-white"
+              }`}
+            />
+            <span>Profile</span>
+          </div>
+        </Link>
+      )}
+
+      <Link to={"/#"}>
+        <div
+          className={`flex items-center py-4 px-8 ${
+            activeItem === "Logout"
+              ? "bg-sky-100 opacity-100  text-sky-400"
+              : "hover:text-sky-400 text-white"
+          }`}
+          onClick={() => {
+            handleItemClick("Logout");
+            onLogout();
+          }}
+        >
+          <FaSignOutAlt
+            className={`text-lg mr-2 ${
+              activeItem === "Fare Collection"
+                ? "text-sky-400"
+                : "hover:text-sky-400 text-white"
+            }`}
+          />
+          <span>Logout</span>
+        </div>
+      </Link>
     </div>
   );
 };
 
-export default Sidebar;
+export default SideBar;

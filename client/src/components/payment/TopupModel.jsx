@@ -3,11 +3,12 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { PayPalButton } from "react-paypal-button-v2";
 
-const TopupModel = ({ isOpen, onClose, onSubmit }) => {
+const TopupModel = ({ isOpen, onClose, onSubmit, currentBalance }) => {
   const validationSchema = Yup.object().shape({
     amount: Yup.number()
       .positive("Amount must be a positive number")
-      .required("Amount is required"),
+      .required("Amount is required")
+      .lessThan(currentBalance, `Amount must be less than ${currentBalance}`),
     transaction_id: Yup.string().required("Transaction ID is required"),
     user_type: Yup.string().required("User Type is required"),
   });

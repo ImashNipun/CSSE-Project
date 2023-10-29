@@ -6,6 +6,8 @@ import { Link, useNavigate } from "react-router-dom";
 
 const BusRoutesList = () => {
   const [busRoutes, setBusRoutes] = useState([]);
+  
+  const [isDeleted, setIsDeleted] = useState(false);
 
   const navigate = useNavigate();
 
@@ -20,7 +22,23 @@ const BusRoutesList = () => {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [isDeleted]);
+  
+  const handleDelete = (id) => {
+    const confirm = window.confirm("Do you want to delete this type?");
+
+    if (confirm) {
+      axios
+        .delete(`http://localhost:8000/api/v1/busroute/${id}`)
+        .then((res) => {
+          setIsDeleted(true);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+    setIsDeleted(false);
+  };
 
   const navigateToReportPage = () => {
     navigate("/bus-route-report", {
@@ -146,8 +164,8 @@ const BusRoutesList = () => {
                             <Link to="/update-bus-route" className="me-4">
                               <AiOutlineEdit />
                             </Link>
-                            <Link to="/#">
-                              <AiOutlineDelete />
+                            <Link to="/bus-routes">
+                              <AiOutlineDelete onClick={() => handleDelete(busTypes._id)}/>
                             </Link>
                           </td>
                         </tr>

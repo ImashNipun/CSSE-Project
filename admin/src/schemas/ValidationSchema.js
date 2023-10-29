@@ -1,11 +1,14 @@
 import * as Yup from "yup";
 
 export const busRouteValidationSchema = Yup.object().shape({
+  busType: Yup.string().required("Type is required"),
   routeName: Yup.string().required("Required"),
   routeNumber: Yup.string().required("Required"),
   beginning: Yup.string().required("Required"),
   destination: Yup.string().required("Required"),
-  // intermediateStops: Yup.string().required("Required"),
+  intermediateStops: Yup.array().of(Yup.object().shape({
+    stop: Yup.string().required("Stop is required"),
+  })),
   distance: Yup.string().required("Required"),
   travelTime: Yup.string().required("Required"),
   schedule: Yup.string().required("Required"),
@@ -22,7 +25,6 @@ export const fareCycleValidationSchema = Yup.object().shape({
   type: Yup.string().required("Type is required"),
   fare: Yup.array().of(
     Yup.object().shape({
-      // no: Yup.number().required("Fare number is required"),
       price: Yup.string()
         .required("Price is required")
         .min(0, "Price must be greater than or equal to 0")
